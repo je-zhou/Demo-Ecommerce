@@ -8,8 +8,8 @@ import React, { useState } from 'react'
 import Filter from './Filter'
 
 interface MobileFilterProps {
-  // sizes: Size[]
-  // colours: Colour[]
+  sizes: any[]
+  colours: any[]
 }
 
 export default function MobileFilter({sizes, colours}: MobileFilterProps) {
