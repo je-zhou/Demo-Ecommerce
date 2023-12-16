@@ -65,13 +65,12 @@ export default function Summary() {
   const shippingPrice = shippingOption ? shippingOption.price : 0
 
   async function onCheckout(){
-    console.log(process.env.STRIPE_API_KEY)
 
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
       cartItems: items,
       shipping: shippingPrice,
       shippingName: shippingOption? shippingOption.name : "Standard",
-      stripeAPIKey: process.env.STRIPE_API_KEY
+      stripeAPIKey: process.env.NEXT_PUBLIC_STRIPE_API_KEY
     })
 
     window.location = response.data.url
