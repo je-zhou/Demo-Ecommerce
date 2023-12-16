@@ -11,11 +11,13 @@ import { useSearchParams } from "next/navigation"
 import toast from "react-hot-toast"
 import { calculateProductShipping, cn, getVariablePrice } from "@/lib/utils"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
+import { useOrigin } from "@/hooks/use-origin"
 
 export default function Summary() {
   const searchParams = useSearchParams();
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll)
+  const origin = useOrigin();
 
   const [shipping, setShipping] = useState("Standard");
 
@@ -70,7 +72,8 @@ export default function Summary() {
       cartItems: items,
       shipping: shippingPrice,
       shippingName: shippingOption? shippingOption.name : "Standard",
-      stripeAPIKey: process.env.NEXT_PUBLIC_STRIPE_API_KEY
+      stripeAPIKey: process.env.NEXT_PUBLIC_STRIPE_API_KEY,
+      frontEndStoreURL: origin
     })
 
     window.location = response.data.url

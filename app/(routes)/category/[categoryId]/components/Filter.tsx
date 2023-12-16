@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
 interface FilterProps {
-  data: (Size | Colour)[]
+  data: any[]
   name: string
   valueKey: string
 }
