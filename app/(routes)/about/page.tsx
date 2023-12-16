@@ -10,7 +10,7 @@ export default function AboutUs() {
       <Container>
         <div className='w-full'>
           <div className='w-full relative'>
-            <AspectRatio ratio={3/2} className='w-full'>
+            <AspectRatio ratio={12/5} className='w-full'>
               <Image className='rounded' src={"/assets/about_us.jpg"} alt='About Us' fill/>
             </AspectRatio>
           </div>

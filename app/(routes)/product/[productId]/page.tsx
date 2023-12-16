@@ -36,7 +36,7 @@ export default async function ProductPage({params}: ProductPageProps) {
             <div className='flex items-center flex-col max-w-fit'>
               <h2 className='text-2xl font-bold'>Details</h2>
               <div className='w-full px-1'>
-               <div className='h-1 bg-[#FF6A6A] rounded-t-full'/>
+               <div className='h-1 bg-black rounded-t-full'/>
               </div>
             </div>
             <p className='whitespace-pre-line text-sm text-gray-800'>{product.productDetails ? Buffer.from(product.productDetails.data).toString("utf-8") : ""}</p>
@@ -46,7 +46,7 @@ export default async function ProductPage({params}: ProductPageProps) {
             <div className='flex items-center flex-col max-w-fit'>
               <h2 className='text-2xl font-bold'>Reviews</h2>
               <div className='w-full px-1'>
-                <div className='h-1 bg-[#FF6A6A] rounded-t-full'/>
+                <div className='h-1 bg-black rounded-t-full'/>
               </div>
             </div>
             <Reviews

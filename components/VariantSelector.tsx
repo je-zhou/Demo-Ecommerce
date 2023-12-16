@@ -36,7 +36,7 @@ export default function VariantSelector({variant, value, onChange}: VariantSelec
             </TabsList>
           </Tabs> :
           <Select value={value} onValueChange={(val) => onChange(variant.id, val)}>
-            <SelectTrigger className='w-full text-black rounded border-2 border-[#FF6A6A] space-x-2'>
+            <SelectTrigger className='w-full text-black rounded border-2 border-black space-x-2'>
               <SelectValue />
             </SelectTrigger>
             <SelectContent className='w-full text-black bg-white pr-6 pl-2 py-2 rounded'>

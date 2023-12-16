@@ -27,7 +27,7 @@ export default function Reviews({product}: ReviewsProps) {
       <div className='space-y-8'>
         {/* Write a Review */}
         <Button 
-          className='bg-[#FF6A6A] rounded text-white hover:bg-[#FF6A6A]'
+          className='bg-black rounded text-white hover:bg-black'
           onClick={() => setIsOpen(true)}
         >
           Write a Review

@@ -14,7 +14,7 @@ export default function LandingImage() {
             <p className='max-w-2xl font-light text-lg'>Your Cozy Adventure Begins Here!</p>
             {/* CTA */}
             <Link href={"/product"}>
-                <Button className='bg-blue-600 text-white hover:bg-blue-600 transition rounded p-7 text-xl'>Shop Now</Button>
+                <Button className='bg-white text-black hover:bg-white transition rounded p-7 text-xl'>Shop Now</Button>
             </Link>
         </div>
         <div className='bg-black w-full h-full absolute opacity-60 z-10'></div>

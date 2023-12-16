@@ -86,7 +86,7 @@ export default function Info({data}: InfoProps) {
         {/* Quantity */}
         <Quantity size='medium' value={quantity} onAdd={() => setQuantity(quantity+1)} onSubtract={() => setQuantity(quantity-1)}/>
         {/* Cart Button */}
-        <Button onClick={onAddToCart} type='button' variant="default"  className='w-64 h-12 bg-[#FF6A6A] hover:bg-[#FF6A6A] text-xl rounded text-white' >
+        <Button onClick={onAddToCart} type='button' variant="default"  className='w-64 h-12 bg-black hover:bg-black text-xl rounded text-white' >
           Add to cart
           <ShoppingCart className='ml-2'/>
         </Button>

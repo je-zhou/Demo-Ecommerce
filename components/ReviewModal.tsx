@@ -98,7 +98,7 @@ export default function ReviewModal({isOpen, onClose, product}: ReviewModalProps
             for (let i = 1; i<= 5; i++) {
               ratings.push(<Star
                 key={i}
-                className={cn('hover:cursor-pointer', field.value >= i ? "text-[#FF6A6A] " : "text-gray-300" )}
+                className={cn('hover:cursor-pointer', field.value >= i ? "text-black " : "text-gray-300" )}
                 onClick={() => field.onChange(i)}
 
               />)
@@ -157,7 +157,7 @@ export default function ReviewModal({isOpen, onClose, product}: ReviewModalProps
           )}
         /> */}
         <div className='flex justify-center'>
-          <Button disabled={loading} type='submit' className='w-32 bg-[#FF6A6A] hover:bg-[#FF6A6A] text-white rounded'>Submit</Button>
+          <Button disabled={loading} type='submit' className='w-32 bg-black hover:bg-black text-white rounded'>Submit</Button>
         </div>
 
       </form>

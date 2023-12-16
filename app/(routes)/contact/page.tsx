@@ -18,18 +18,18 @@ export default function AboutUs() {
           {/* Call Us */}
           <div>
             <h3 className='font-semibold text-xl'>Call</h3>
-            <p className='text-gray-500'>Call us at <span className='underline cursor-pointer'>+61 (03) 8821 6250</span></p>
+            <p className='text-gray-500'>Call us at <span className='underline cursor-pointer'>+61 434 412 800</span></p>
           </div>
           {/* Visit Us */}
-          <div>
+          {/* <div>
             <h3 className='font-semibold text-xl'>Visit</h3>
             <p className='text-gray-500'>Visit us at <span className='underline cursor-pointer'>6 Montgomery Avenue, Mount Waverley, VIC 3149, Australia</span></p>
-          </div>
+          </div> */}
           {/* Email */}
-          <div>
+          {/* <div>
             <h3 className='font-semibold text-xl'>Email</h3>
             <p className='text-gray-500'>Send us an email at <span className='underline cursor-pointer'>dmh@decormyhouse.com.au</span> or via the form below</p>
-          </div>
+          </div> */}
           {/* Email form */}
           <ContactForm />
           {/* Socials */}

@@ -84,7 +84,7 @@ export default function ContactForm() {
           )}
         />
         <div className='pt-4'>
-          <Button className='bg-[#FF6A6A] text-white rounded hover:bg-[#FF6A6A] w-40' type="submit">Submit</Button>
+          <Button className='bg-black text-white rounded hover:bg-black w-40' type="submit">Submit</Button>
 
         </div>
       </form>

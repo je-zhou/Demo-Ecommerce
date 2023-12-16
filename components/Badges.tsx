@@ -23,7 +23,7 @@ interface BadgeProps {
 export function Badge({title, icon, className}: BadgeProps) {
   return (
     <div className={cn('flex items-center', className)}>
-      <div className='bg-[#FF6A6A] rounded-full p-1 text-white'>
+      <div className='bg-black rounded-full p-1 text-white'>
         {icon}
       </div>
       <p>{title}</p>
