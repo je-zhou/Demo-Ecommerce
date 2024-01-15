@@ -11,7 +11,7 @@ export interface Variant {
   inputType: boolean;
   inputStart?: number
   inputEnd?: number
-  variantOptions: VariantValue[]
+  variantOptions?: VariantValue[]
 }
 
 export interface VariantValue {

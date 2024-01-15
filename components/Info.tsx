@@ -62,7 +62,7 @@ export default function Info({data}: InfoProps) {
         {
           data.variants.sort((a,b) => Number(a.inputType) - Number(b.inputType)).map((variant) => 
             <div key={variant.id}
-              className={cn('flex gap-x-4 pt-4', variant.variantOptions.length > 2 ? "" : "")}>
+              className={cn('flex gap-x-4 pt-4', variant.variantOptions ? variant.variantOptions.length > 2 ? "" : "" : "")}>
                 {
                   variant.inputType ? 
                     <VariantSlider
