@@ -16,9 +16,9 @@ export default async function Home() {
           <Container>
             <div className='flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8 '>
               {/* Best Sellers */}
-              <div className='flex flex-row space-x-16 justify-center py-24'>
+              <div className='flex flex-col sm:flex-row sm:space-x-16 justify-center py-24'>
                 {/* Text */}
-                <div className='text-black max-w-[240px] space-y-4 mt-8'>
+                <div className='text-black sm:max-w-[240px] space-y-4 mt-8'>
                   <p className='font-bold underline text-xl'>Best Sellers</p>
                   <p>Drip out in style with the most popular picks our customers love</p>
                 </div>

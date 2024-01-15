@@ -26,7 +26,7 @@ export default async function CategoryPage({params, searchParams}: CategoryPageP
   const category = await getCategory(params.categoryId)
 
   return (
-    <div className='bg-white min-h-screen text-black pb-24'>
+    <div className='bg-white min-h-screen text-black pb-24 px-4'>
       <Container>
         <Billboard url={category.imageUrl} description={""}/>
         <div className='py-16 flex flex-row space-between'>
