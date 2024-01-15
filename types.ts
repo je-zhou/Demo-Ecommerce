@@ -16,7 +16,7 @@ export interface Variant {
 
 export interface VariantValue {
   id: string;
-  name: string;
+  value: string;
 }
 
 export interface ProductPricingMatrix {

@@ -10,7 +10,7 @@ interface VariantSelectorProps {
 }
 
 export default function VariantSelector({variant, value, onChange}: VariantSelectorProps) {
-  const options = variant.variantOptions.map((vo) => vo.name);
+  const options = variant.variantOptions.map((vo) => vo.value);
   
   return (
     <div className="flex flex-col space-y-4">

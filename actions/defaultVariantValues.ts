@@ -9,7 +9,7 @@ export function loadDefaultVariantValues(product: Product) {
     if (v.inputType) {
       initialVariants[v.id] = v.inputStart? v.inputStart.toString() : ""
     } else {
-      initialVariants[v.id] = options.length > 0 ? options[0].name : ""
+      initialVariants[v.id] = options.length > 0 ? options[0].value : ""
     }
   })
 
