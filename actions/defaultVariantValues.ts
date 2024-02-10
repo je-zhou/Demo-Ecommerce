@@ -5,6 +5,7 @@ export function loadDefaultVariantValues(product: Product) {
 
   product.variants.forEach((v) => {
     const options = v.variantOptions ?? []
+
     
     if (v.inputType) {
       initialVariants[v.id] = v.inputStart? v.inputStart.toString() : ""
