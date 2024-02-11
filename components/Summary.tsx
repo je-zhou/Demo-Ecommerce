@@ -73,7 +73,8 @@ export default function Summary() {
       shipping: shippingPrice,
       shippingName: shippingOption? shippingOption.name : "Standard",
       stripeAccountId: process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID,
-      frontEndStoreURL: origin
+      frontEndStoreURL: origin,
+      customerInvoiceURL: `${origin}/api/762ce920-61a5-4217-9f05-1ab4b1cc75b5/emails/send-invoice`
     })
 
     window.location = response.data.url
