@@ -2,6 +2,8 @@ export interface Category {
   id: string;
   name: string;
   imageUrl: string;
+  description: string;
+  products: Product[]
 }
 
 export interface Variant {
@@ -45,6 +47,51 @@ export interface Product {
   length: string
   shipping?: Shipping
   reviews: Review[]
+}
+
+export interface Order {
+  id: string
+  storeId: string
+  orderItems: OrderItem[]
+  paidOn?: Date
+  phone: string
+  email: string
+  name: string
+  address: string
+  userId?: string
+  statuses: OrderStatus[]
+  orderTotal: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface OrderStatus {
+  id: string
+  status: Status
+  isCompleted: boolean
+  completedOn?: Date
+  displaySeq: number
+  note?: string
+}
+
+export enum Status {
+  ORDER_CREATED,
+  PAYMENT_COMPLETED,
+  ORDER_SENT,
+  ORDER_DELIVERED,
+  ORDER_COMPLETED,
+  RETURN_REQUESTED,
+  RETURN_ACCEPTED,
+  RETURN_RECEIVED,
+  PAYMENT_REFUNDED,
+}
+
+export interface OrderItem {
+  id: string
+  product: Product
+  quantity: number
+  orderPrice?: number
+  selectedVariants?: SelectedVariants
 }
 
 export interface Review {
