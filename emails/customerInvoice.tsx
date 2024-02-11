@@ -18,21 +18,10 @@ import {
 
 import * as React from "react";
 
-
-
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "";
-
 interface CustomerInvoiceEmailProps {
   order: Order
 }
 
-const aud = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "AUD"
-})
-  
 export default function CustomerInvoiceEmail({order}: CustomerInvoiceEmailProps) {
   var total: number = 0;
   
