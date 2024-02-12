@@ -5,7 +5,6 @@ import stripe from "@/lib/stripe"
 import { NextResponse } from "next/server";
 import { ResendClient, ResendResponse } from "@/lib/resend";
 import getOrder from "@/actions/getOrder";
-import { connect } from "http2";
 import getStore from "@/actions/getStore";
 
 export async function POST(req: Request) {

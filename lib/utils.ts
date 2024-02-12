@@ -69,8 +69,6 @@ export function sameVariantCombo(variants1: {[key: string] : string} , variants2
 }
 
 export function getVariablePrice(selectedVariants:{[key: string] : string} , pricingMatrix: ProductPricingMatrix[], variablePricingIds: string[]) {
-  console.log(variablePricingIds)
-
   const sortedPricingMatrix = sortPricingMatrix(pricingMatrix, variablePricingIds);
   
   const newPriceCombo = sortedPricingMatrix.find((pc) => sameVariantCombo(pc.values, selectedVariants, variablePricingIds))

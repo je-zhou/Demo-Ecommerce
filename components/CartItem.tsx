@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import Image from 'next/image'
-import {Check, Cross, Truck, X} from "lucide-react"
+import {Check,  Truck, X} from "lucide-react"
 
 import IconButton from './ui/IconButton'
 import Currency from './ui/Currency'
