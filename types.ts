@@ -1,3 +1,20 @@
+export interface Store {
+  id: string
+  name: string
+  userId: string
+  userEmail: string
+  stripeAccountId: string
+  categories: Category[]
+  products: Product[]
+  orders: Order[]
+  shipping: Shipping[]
+  notifyOrderEmail: boolean
+  notifyOrderSMS: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+
 export interface Category {
   id: string;
   name: string;

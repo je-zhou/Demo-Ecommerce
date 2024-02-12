@@ -1,76 +1,57 @@
-import getOrder from "@/actions/getOrder";
-import { ResendResponse, ResendClient } from "@/lib/resend";
+import Stripe from "stripe"
+import {headers} from "next/headers"
+
+import stripe from "@/lib/stripe"
 import { NextResponse } from "next/server";
+import { ResendClient, ResendResponse } from "@/lib/resend";
+import getOrder from "@/actions/getOrder";
+import { connect } from "http2";
+import getStore from "@/actions/getStore";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-}
+export async function POST(req: Request) {
+  const body = await req.text();
+  const signature = headers().get("Stripe-Signature") as string;
 
-export async function OPTIONS(){
-  return NextResponse.json({}, {headers: corsHeaders})
-}
+  let event: Stripe.Event;
 
-export async function GET(
-) {
+  const stripeSecret = process.env.STRIPE_WEBHOOK_SECRET!
+
   try {
-    const order = await getOrder("2d4de07c-9f8f-4ca5-9ede-6ac059ccebf7")
-
-    if (order){
-
-      // Test to see if storeID === the store id in the order
-
-      // if (params.storeId != order.storeId) throw Error("Store ID does not match the store ID on this order")
-
-      // Send email
-      const emailResult: ResendResponse = await ResendClient.sendCustomerInvoice(order.email, order);
-
-      console.log("[CUSTOMER INVOICE]: ", emailResult.detail);
-
-      return new NextResponse(emailResult.detail, {status: 200, headers: corsHeaders})
-    } else {
-      console.log("Order Not Found")
-      return new NextResponse("No order found with this ID",{status: 501, headers: corsHeaders})
-    }
-  } catch (error) {
-    console.log('[SEND_INVOICE]', error);
-    return new NextResponse("Internal Error", {status: 500, headers: corsHeaders})
+    event = stripe.webhooks.constructEvent(
+      body,
+      signature,
+      stripeSecret
+    )
+  } catch (error: any) {
+    return new NextResponse(`Webhook Error: ${error.message} ::: Webhook Signature: ${signature} ::: Stripe Webhook Secret: ${stripeSecret}`, {status:400})
   }
-}
-export async function POST(
-    req: Request,
-) {
-    try {
-      // Get Order
-      const {
-        orderId,
-        storeId
-      } : {
-        orderId: string
-        storeId: string
-      } = await req.json();
 
+  const session = event.data.object as Stripe.Checkout.Session
+
+  if (event.type === "checkout.session.async_payment_succeeded") {
+
+    const connectId = session?.metadata?.connectId;
+
+    const orderId = session?.metadata?.orderId;
+
+    if (orderId) {
       const order = await getOrder(orderId)
 
-      if (order){
+      // Check this is for the correct stripe store
+      const store = await getStore(order.storeId)
 
-        // Test to see if storeID === the store id in the order
-
-        if (storeId != order.storeId) throw Error("Store ID does not match the store ID on this order")
-
-        // Send email
-        const emailResult: ResendResponse = await ResendClient.sendCustomerInvoice(order.email, order);
-
-        console.log("[CUSTOMER INVOICE]: ", emailResult.detail);
-
-        return new NextResponse(emailResult.detail, {status: 200, headers: corsHeaders})
-      } else {
-        console.log("Order Not Found")
-        return new NextResponse("No order found with this ID",{status: 501, headers: corsHeaders})
+      if (store) {
+        if (store.stripeAccountId === connectId) {
+          // Send email
+          const emailResult: ResendResponse = await ResendClient.sendCustomerInvoice(order.email, order);
+      
+          console.log("[CUSTOMER INVOICE]: ", emailResult.detail);
+      
+          return new NextResponse(emailResult.detail, {status: 200})
+        }
       }
-    } catch (error) {
-      console.log('[SEND_INVOICE]', error);
-      return new NextResponse("Internal Error", {status: 500, headers: corsHeaders})
     }
+  }
+
+  return new NextResponse("Email not send - Something went wrong", {status: 400})
 }

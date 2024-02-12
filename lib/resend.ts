@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import CustomerInvoice from '@/emails/customerInvoice';
 import { Order } from "@/types";
+import axios from "axios";
 
 const resendKey = process.env.RESEND_API_KEY || ''
 const resend = new Resend(resendKey);
@@ -20,6 +21,19 @@ export class ResendClient {
         react: CustomerInvoice({order: order}),
       });
 
+      return {detail: "Invoice sent to customer!", status: 202};
+
+    } catch (error) {
+      console.log(error);
+
+      return {detail: "Couldn't send order email", status: 501}
+    }
+  }
+
+  static async test(): Promise<ResendResponse> {
+    try {        
+      const resp = axios.get("https://anime-facts-rest-api.herokuapp.com/api/v1");
+      console.log(resp);
       return {detail: "Invoice sent to customer!", status: 202};
 
     } catch (error) {
