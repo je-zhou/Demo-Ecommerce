@@ -29,17 +29,4 @@ export class ResendClient {
       return {detail: "Couldn't send order email", status: 501}
     }
   }
-
-  static async test(): Promise<ResendResponse> {
-    try {        
-      const resp = axios.get("https://anime-facts-rest-api.herokuapp.com/api/v1");
-      console.log(resp);
-      return {detail: "Invoice sent to customer!", status: 202};
-
-    } catch (error) {
-      console.log(error);
-
-      return {detail: "Couldn't send order email", status: 501}
-    }
-  }
 }
