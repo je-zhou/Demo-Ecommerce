@@ -21,6 +21,8 @@ export default function Summary() {
 
   const [shipping, setShipping] = useState("Standard");
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (searchParams.get("success")) {
       toast.success("Payment completed.")
@@ -68,13 +70,23 @@ export default function Summary() {
 
   async function onCheckout(){
 
+    setLoading(true);
+
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
       cartItems: items,
       shipping: shippingPrice,
       shippingName: shippingOption? shippingOption.name : "Standard",
       stripeAccountId: process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID,
       frontEndStoreURL: origin,
-    })
+    });
+
+    console.log(response);
+
+    if (response.status!= 200) {
+      toast.error("Something went wrong. Please try again later");
+    }
+
+    setLoading(false);
 
     window.location = response.data.url
   }
@@ -124,7 +136,7 @@ export default function Summary() {
             <Currency value={totalPrice + shippingPrice}/>
           </div>
       </div>
-      <Button onClick={onCheckout} className="bg-white text-black border rounded-xl w-full mt-6 hover:bg-black hover:text-white h-12">
+      <Button disabled={loading} onClick={onCheckout} className="bg-white text-black border rounded-xl w-full mt-6 hover:bg-black hover:text-white h-12">
         Checkout
       </Button>
     </div>
