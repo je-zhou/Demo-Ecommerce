@@ -72,7 +72,7 @@ export default function Summary() {
       cartItems: items,
       shipping: shippingPrice,
       shippingName: shippingOption? shippingOption.name : "Standard",
-      stripeAccountId: process.env.STRIPE_ACCOUNT_ID,
+      stripeAccountId: process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID,
       frontEndStoreURL: origin,
     })
 
