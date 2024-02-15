@@ -69,27 +69,31 @@ export default function Summary() {
   const shippingPrice = shippingOption ? shippingOption.price : 0
 
   async function onCheckout(){
-
     setLoading(true);
 
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
-      cartItems: items,
-      shipping: shippingPrice,
-      shippingName: shippingOption? shippingOption.name : "Standard",
-      stripeAccountId: process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID,
-      frontEndStoreURL: origin,
-      isLocalPickUp: shipping === "Local Pick Up"
-    });
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
+        cartItems: items,
+        shipping: shippingPrice,
+        shippingName: shippingOption? shippingOption.name : "Standard",
+        stripeAccountId: process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID,
+        frontEndStoreURL: origin,
+        isLocalPickUp: shipping === "Local Pick Up"
+      });
+  
+      if (response.status!= 200) {
+        toast.error("Something went wrong. Please try again later");
+      }
 
-    console.log(response);
+      window.location = response.data.url
 
-    if (response.status!= 200) {
+    } catch (error) {
       toast.error("Something went wrong. Please try again later");
+      
+    } finally {
+      setLoading(false);
+
     }
-
-    setLoading(false);
-
-    window.location = response.data.url
   }
 
   return (
