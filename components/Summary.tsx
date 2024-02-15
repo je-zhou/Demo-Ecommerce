@@ -78,6 +78,7 @@ export default function Summary() {
       shippingName: shippingOption? shippingOption.name : "Standard",
       stripeAccountId: process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID,
       frontEndStoreURL: origin,
+      isLocalPickUp: shipping === "Local Pick Up"
     });
 
     console.log(response);
