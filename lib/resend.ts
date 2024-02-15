@@ -1,9 +1,8 @@
 import { Resend } from "resend";
 import CustomerInvoice from '@/emails/customerInvoice';
 import { Order } from "@/types";
-import axios from "axios";
 
-const resendKey = process.env.RESEND_API_KEY || ''
+const resendKey = process.env.NEXT_PUBLIC_RESEND_API_KEY || ''
 const resend = new Resend(resendKey);
 
 export type ResendResponse = {

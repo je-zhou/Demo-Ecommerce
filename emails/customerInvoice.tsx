@@ -125,6 +125,18 @@ export default function CustomerInvoiceEmail({order}: CustomerInvoiceEmailProps)
         <Section align="right">
           <Row>
             <Column style={tableCell} align="right">
+              <Text style={productPriceTotal}>{order.isLocalPickUp ? "Local Pick Up": "Shipping"}</Text>
+            </Column>
+            <Column style={productPriceVerticalLine}></Column>
+            <Column style={productPriceLargeWrapper}>
+              <Text style={productPriceLarge}>${Number(order.shipping)}</Text>
+            </Column>
+          </Row>
+        </Section>
+        <Hr style={productPriceLine} />
+        <Section align="right">
+          <Row>
+            <Column style={tableCell} align="right">
               <Text style={productPriceTotal}>TOTAL</Text>
             </Column>
             <Column style={productPriceVerticalLine}></Column>

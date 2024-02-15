@@ -78,6 +78,8 @@ export interface Order {
   userId?: string
   statuses: OrderStatus[]
   orderTotal: number
+  shipping: number
+  isLocalPickUp: boolean
   createdAt: Date
   updatedAt: Date
 }
