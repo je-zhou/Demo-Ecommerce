@@ -129,7 +129,7 @@ export default function CustomerInvoiceEmail({order}: CustomerInvoiceEmailProps)
             </Column>
             <Column style={productPriceVerticalLine}></Column>
             <Column style={productPriceLargeWrapper}>
-              <Text style={productPriceLarge}>${Number(order.shipping)}</Text>
+              <Text style={productPriceLarge}>${Number(order.shipping).toFixed(2)}</Text>
             </Column>
           </Row>
         </Section>
@@ -137,11 +137,11 @@ export default function CustomerInvoiceEmail({order}: CustomerInvoiceEmailProps)
         <Section align="right">
           <Row>
             <Column style={tableCell} align="right">
-              <Text style={productPriceTotal}>TOTAL</Text>
+              <Text style={productPriceTotal}>Total</Text>
             </Column>
             <Column style={productPriceVerticalLine}></Column>
             <Column style={productPriceLargeWrapper}>
-              <Text style={productPriceLarge}>${total}</Text>
+              <Text style={productPriceLarge}>${total.toFixed(2)}</Text>
             </Column>
           </Row>
         </Section>
@@ -373,7 +373,7 @@ function OrderItem({orderItem, itemPrice }: OrderItemProps) {
         </Column>
         {/* Amount */}
         <Column style={productPriceWrapper} align="right">
-          <Text style={productPrice}>${itemPrice}</Text>
+          <Text style={productPrice}>${itemPrice.toFixed(2)}</Text>
         </Column>
       </Row>
     </Section>
