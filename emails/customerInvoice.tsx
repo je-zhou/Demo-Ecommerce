@@ -33,7 +33,7 @@ export default function CustomerInvoiceEmail({order}: CustomerInvoiceEmailProps)
     const unitPrice = Number(itemPrice)
     const orderTotal = unitPrice * oi.quantity
 
-    orderItemComponents.push(<OrderItem key={oi.id} orderItem={oi} itemPrice={unitPrice}/>)
+    orderItemComponents.push(<OrderItemComponent key={oi.id} orderItem={oi} itemPrice={unitPrice}/>)
 
     total += orderTotal;
   })
@@ -42,7 +42,7 @@ export default function CustomerInvoiceEmail({order}: CustomerInvoiceEmailProps)
   return (
     <Html>
     <Head />
-    <Preview>You got an order</Preview>
+    <Preview>Order Received!</Preview>
     <Body style={main}>
       <Container style={container}>
         <Section>
@@ -345,7 +345,7 @@ interface OrderItemProps {
   itemPrice: number
 }
 
-function OrderItem({orderItem, itemPrice }: OrderItemProps) {
+function OrderItemComponent({orderItem, itemPrice }: OrderItemProps) {
   return (
     <Section>
       <Row>

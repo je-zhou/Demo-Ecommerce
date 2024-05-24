@@ -38,7 +38,7 @@ export async function POST(req: Request) {
   
       console.log("[CUSTOMER INVOICE]: ", emailResult.detail);
   
-      return new NextResponse(emailResult.detail, {status: 200})
+      return new NextResponse(JSON.stringify(emailResult), {status: 200})
    
     }
   }
