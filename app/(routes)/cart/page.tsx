@@ -1,42 +1,53 @@
-"use client"
-import CartItem from '@/components/CartItem';
-import Container from '@/components/Container';
-import Summary from '@/components/Summary';
-import useCart from '@/hooks/use-cart';
-import React, { useEffect, useState } from 'react'
+"use client";
+import CartItem from "@/components/CartItem";
+import Container from "@/components/Container";
+import Summary from "@/components/Summary";
+import useCart from "@/hooks/use-cart";
+import React, { useEffect, useState } from "react";
 
 export default function CartPage() {
   const cart = useCart();
 
-  const [isMounted, setIsMounted] = useState(false)
+  const [isMounted, setIsMounted] = useState(false);
+  const [address, setAddress] = useState<{
+    line1: string;
+    line2: string | null;
+    city: string;
+    state: string;
+    postal_code: string;
+    country: string;
+  }>();
 
-  useEffect(()=> {
-    setIsMounted(true)
-  }, [])
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   if (!isMounted) return null;
 
   return (
-    <div className='bg-white min-h-screen h-full'>
+    <div className="bg-white min-h-screen h-full">
       <Container>
-        <div className='px-4 py-16 sm:px-6 lg:px-8 text-black'>
-          <h1 className='text-3xl font-bold'>Shopping Cart</h1>
-          <div className='mt-12 lg:grid lg:grid-cols-12 lg:items-start gap-x-12'>
-            <div className='lg:col-span-7'>
-              {
-                cart.items.length === 0 && <p className='text-neutral-500'>No items added to cart</p>
-              }
+        <div className="px-4 py-16 sm:px-6 lg:px-8 text-black">
+          <h1 className="text-3xl font-bold">Shopping Cart</h1>
+          <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start gap-x-12">
+            <div className="lg:col-span-7">
+              {cart.items.length === 0 && (
+                <p className="text-neutral-500">No items added to cart</p>
+              )}
               <ul>
-                {cart.items.map((item)=> (
-                  <CartItem key={item.id + Object.values(item.selectedVariants).join()} data={item}/>
+                {cart.items.map((item) => (
+                  <CartItem
+                    key={item.id + Object.values(item.selectedVariants).join()}
+                    data={item}
+                    address={address}
+                  />
                 ))}
               </ul>
             </div>
-          <Summary/>
+            <Summary address={address} setAddress={setAddress} />
           </div>
         </div>
       </Container>
-
     </div>
-  )
+  );
 }
