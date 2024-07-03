@@ -16,14 +16,23 @@ export class ResendClient {
     order: Order
   ): Promise<ResendResponse> {
     try {
-      await resend.emails.send({
+      const response = await resend.emails.send({
         from: "021 Commerce <info@021-commerce.com.au>",
         to: email,
         subject: `Thanks for your order! [${order.id}]`,
         react: CustomerInvoice({ order: order }),
       });
 
-      return { detail: "Invoice sent to customer!", status: 202 };
+      if (response.error) {
+        return {
+          detail: "Couldn't send order email: " + response.error.message,
+          status: 501,
+        };
+      }
+      return {
+        detail: "Order Email Sent: Response - " + response.data?.id,
+        status: 202,
+      };
     } catch (error) {
       console.log(error);
 
