@@ -1,5 +1,17 @@
 import { StringIterator } from "lodash";
 
+export interface Store {
+  id: string;
+  name: string;
+  userId: string;
+  userEmail: string;
+  stripeAccountId: string;
+  isTestAccount: boolean;
+  categories: Category[];
+  products: Product[];
+  orders: Order[];
+  shipping: Shipping[];
+}
 export interface Category {
   id: string;
   name: string;

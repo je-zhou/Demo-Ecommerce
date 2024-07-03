@@ -19,173 +19,178 @@ import {
 import * as React from "react";
 
 interface CustomerInvoiceEmailProps {
-  order: Order
+  order: Order;
 }
 
-export default function CustomerInvoiceEmail({order}: CustomerInvoiceEmailProps) {
+export default function CustomerInvoiceEmail({
+  order,
+}: CustomerInvoiceEmailProps) {
   var total: number = 0;
-  
+
   const orderItemComponents: React.JSX.Element[] = [];
 
   order.orderItems.forEach((oi) => {
-    const variablePricingIds = oi.product.variants.filter(v => v.inputType && v.variablePricing).map(v => v.id); 
-    const itemPrice = oi.product.pricingMatrix ? getVariablePrice(oi.selectedVariants as any, oi.product.pricingMatrix, variablePricingIds) ?? oi.product.price : oi.product.price
-    const unitPrice = Number(itemPrice)
-    const orderTotal = unitPrice * oi.quantity
+    const variablePricingIds = oi.product.variants
+      .filter((v) => v.inputType && v.variablePricing)
+      .map((v) => v.id);
+    const itemPrice = oi.product.pricingMatrix
+      ? getVariablePrice(
+          oi.selectedVariants as any,
+          oi.product.pricingMatrix,
+          variablePricingIds
+        ) ?? oi.product.price
+      : oi.product.price;
+    const unitPrice = Number(itemPrice);
+    const orderTotal = unitPrice * oi.quantity;
 
-    orderItemComponents.push(<OrderItemComponent key={oi.id} orderItem={oi} itemPrice={unitPrice}/>)
+    orderItemComponents.push(
+      <OrderItemComponent key={oi.id} orderItem={oi} itemPrice={unitPrice} />
+    );
 
     total += orderTotal;
-  })
+  });
 
-  
   return (
     <Html>
-    <Head />
-    <Preview>Order Received!</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Section>
-          <Row>
-            <Column>
-              <Img
-                src={'/assets/logo.png'}
-                width="80"
-                alt="Logo"
-              />
-            </Column>
-            <Column align="right" style={tableCell}>
-              <Text style={heading}>Order Received</Text>
-            </Column>
-          </Row>
-        </Section>
-        <Section style={informationTable}>
-          <Row style={informationTableRow}>
-            <Column colSpan={2}>
-              <Section>
-                <Row>
-                <Column style={informationTableColumn}>
-                    <Text style={informationTableLabel}>ORDER ID</Text>
-                    <Link
-                      style={{
-                        ...informationTableValue,
-                        color: "#15c",
-                        textDecoration: "underline",
-                      }}
-                    >
-                      {order.id}
-                    </Link>
-                  </Column>
-                </Row>
-                <Row>
-                  <Column style={informationTableColumn}>
-                    <Text style={informationTableLabel}>ORDER DATE</Text>
-                    <Text style={informationTableValue}>{format(order.createdAt, "dd MMMM yyyy")}</Text>
-                  </Column>
-                </Row>
-                <Row>
-                  <Column style={informationTableColumn}>
-                    <Text style={informationTableLabel}>EMAIL</Text>
-                    <Link
-                      style={{
-                        ...informationTableValue,
-                        color: "#15c",
-                        textDecoration: "underline",
-                      }}
-                    >
-                      {order.email}
-                    </Link>
-                  </Column>
-                  <Column style={informationTableColumn}>
-                    <Text style={informationTableLabel}>NAME</Text>
-                    <Text style={informationTableValue}>{order.name}</Text>
-                  </Column>
-                  <Column style={informationTableColumn}>
-                    <Text style={informationTableLabel}>PHONE</Text>
-                    <Text style={informationTableValue}>{order.phone}</Text>
-                  </Column>
-                </Row>
-              </Section>  
-            </Column>
-            <Column style={informationTableColumn} colSpan={2}>
-              <Text style={informationTableLabel}>DELIVER TO</Text>
-              {
-                order.address.split(",").map((t) => <Text key={t} style={informationTableValue}>{t}</Text>)
-              }
-            </Column>
-          </Row>
-        </Section>
-        <Section style={productTitleTable}>
-          <Text style={productsTitle}>Summary</Text>
-        </Section>
-        <Section>
-          {orderItemComponents}
-        </Section>
-        <Hr style={productPriceLine} />
-        <Section align="right">
-          <Row>
-            <Column style={tableCell} align="right">
-              <Text style={productPriceTotal}>{order.isLocalPickUp ? "Local Pick Up": "Shipping"}</Text>
-            </Column>
-            <Column style={productPriceVerticalLine}></Column>
-            <Column style={productPriceLargeWrapper}>
-              <Text style={productPriceLarge}>${Number(order.shipping).toFixed(2)}</Text>
-            </Column>
-          </Row>
-        </Section>
-        <Hr style={productPriceLine} />
-        <Section align="right">
-          <Row>
-            <Column style={tableCell} align="right">
-              <Text style={productPriceTotal}>Total</Text>
-            </Column>
-            <Column style={productPriceVerticalLine}></Column>
-            <Column style={productPriceLargeWrapper}>
-              <Text style={productPriceLarge}>${total.toFixed(2)}</Text>
-            </Column>
-          </Row>
-        </Section>
-        <Hr style={productPriceLineBottom} />
-        <Text style={footerTextCenter}>
-          Thank you for your order!
-        </Text>
-        <Text style={footerTextCenter}>
-          Do you have any questions, returns, or exchanges regarding your purchase?{" "}
-          <Link
-            href="https://decormyhouse.com.au/"
-            style={footerLink}
-          >
-            Let us know.
-          </Link>
-        </Text>
-        <Section>
-          <Row>
-            <Column align="center" style={footerIcon}>
-              <Img
-                src={'/assets/logo.png'}
-                width="64"
-                height="64"
-                alt="Logo"
-              />
-            </Column>
-          </Row>
-        </Section>
-        <Text style={footerLinksWrapper}>
-          <Link href="https://decormyhouse.com.au/">
-            Terms of Use
-          </Link>{" "}
-          •{" "}
-          <Link href="https://decormyhouse.com.au/">
-            Privacy Policy{" "}
-          </Link>
-        </Text>
-        <Text style={footerCopyright}>
-          Copyright © 2024 Decor My House. <br />{" "}
-          <Link href="https://decormyhouse.com.au/">All rights reserved</Link>
-        </Text>
-      </Container>
-    </Body>
-  </Html>)
+      <Head />
+      <Preview>Order Received!</Preview>
+      <Body style={main}>
+        <Container style={container}>
+          <Section>
+            <Row>
+              <Column>
+                <Img src={"/assets/logo.png"} width="80" alt="Logo" />
+              </Column>
+              <Column align="right" style={tableCell}>
+                <Text style={heading}>Order Received</Text>
+              </Column>
+            </Row>
+          </Section>
+          <Section style={informationTable}>
+            <Row style={informationTableRow}>
+              <Column colSpan={2}>
+                <Section>
+                  <Row>
+                    <Column style={informationTableColumn}>
+                      <Text style={informationTableLabel}>ORDER ID</Text>
+                      <Link
+                        style={{
+                          ...informationTableValue,
+                          color: "#15c",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        {order.id}
+                      </Link>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column style={informationTableColumn}>
+                      <Text style={informationTableLabel}>ORDER DATE</Text>
+                      <Text style={informationTableValue}>
+                        {format(order.createdAt, "dd MMMM yyyy")}
+                      </Text>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column style={informationTableColumn}>
+                      <Text style={informationTableLabel}>EMAIL</Text>
+                      <Link
+                        style={{
+                          ...informationTableValue,
+                          color: "#15c",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        {order.email}
+                      </Link>
+                    </Column>
+                    <Column style={informationTableColumn}>
+                      <Text style={informationTableLabel}>NAME</Text>
+                      <Text style={informationTableValue}>{order.name}</Text>
+                    </Column>
+                    <Column style={informationTableColumn}>
+                      <Text style={informationTableLabel}>PHONE</Text>
+                      <Text style={informationTableValue}>{order.phone}</Text>
+                    </Column>
+                  </Row>
+                </Section>
+              </Column>
+              <Column style={informationTableColumn} colSpan={2}>
+                <Text style={informationTableLabel}>DELIVER TO</Text>
+                {order.address.split(",").map((t) => (
+                  <Text key={t} style={informationTableValue}>
+                    {t}
+                  </Text>
+                ))}
+              </Column>
+            </Row>
+          </Section>
+          <Section style={productTitleTable}>
+            <Text style={productsTitle}>Summary</Text>
+          </Section>
+          <Section>{orderItemComponents}</Section>
+          <Hr style={productPriceLine} />
+          <Section align="right">
+            <Row>
+              <Column style={tableCell} align="right">
+                <Text style={productPriceTotal}>
+                  {order.isLocalPickUp ? "Local Pick Up" : "Shipping"}
+                </Text>
+              </Column>
+              <Column style={productPriceVerticalLine}></Column>
+              <Column style={productPriceLargeWrapper}>
+                <Text style={productPriceLarge}>
+                  ${Number(order.shipping).toFixed(2)}
+                </Text>
+              </Column>
+            </Row>
+          </Section>
+          <Hr style={productPriceLine} />
+          <Section align="right">
+            <Row>
+              <Column style={tableCell} align="right">
+                <Text style={productPriceTotal}>Total</Text>
+              </Column>
+              <Column style={productPriceVerticalLine}></Column>
+              <Column style={productPriceLargeWrapper}>
+                <Text style={productPriceLarge}>${total.toFixed(2)}</Text>
+              </Column>
+            </Row>
+          </Section>
+          <Hr style={productPriceLineBottom} />
+          <Text style={footerTextCenter}>Thank you for your order!</Text>
+          <Text style={footerTextCenter}>
+            Do you have any questions, returns, or exchanges regarding your
+            purchase?{" "}
+            <Link href="https://decormyhouse.com.au/" style={footerLink}>
+              Let us know.
+            </Link>
+          </Text>
+          <Section>
+            <Row>
+              <Column align="center" style={footerIcon}>
+                <Img
+                  src={"/assets/logo.png"}
+                  width="64"
+                  height="64"
+                  alt="Logo"
+                />
+              </Column>
+            </Row>
+          </Section>
+          <Text style={footerLinksWrapper}>
+            <Link href="https://decormyhouse.com.au/">Terms of Use</Link> •{" "}
+            <Link href="https://decormyhouse.com.au/">Privacy Policy </Link>
+          </Text>
+          <Text style={footerCopyright}>
+            Copyright © 2024 Decor My House. <br />{" "}
+            <Link href="https://decormyhouse.com.au/">All rights reserved</Link>
+          </Text>
+        </Container>
+      </Body>
+    </Html>
+  );
 }
 
 const main = {
@@ -341,11 +346,11 @@ const footerCopyright = {
 };
 
 interface OrderItemProps {
-  orderItem: OrderItem
-  itemPrice: number
+  orderItem: OrderItem;
+  itemPrice: number;
 }
 
-function OrderItemComponent({orderItem, itemPrice }: OrderItemProps) {
+function OrderItemComponent({ orderItem, itemPrice }: OrderItemProps) {
   return (
     <Section>
       <Row>
@@ -355,20 +360,27 @@ function OrderItemComponent({orderItem, itemPrice }: OrderItemProps) {
             src={orderItem.product.images[0].url}
             width="100"
             height="100"
-            className='mx-4'
+            className="mx-4"
             alt={orderItem.product.name}
           />
         </Column>
         {/* Name and Variants */}
         <Column style={{ paddingLeft: "32px" }}>
-          <Text style={productTitle}>{orderItem.product.name} <span>{"x" + orderItem.quantity}</span></Text>
+          <Text style={productTitle}>
+            {orderItem.product.name} <span>{"x" + orderItem.quantity}</span>
+          </Text>
           <Column>
             {orderItem.product.variants.map((v) => {
-            const valueJsons = orderItem.selectedVariants ? orderItem.selectedVariants : null;
-            const val = valueJsons ? valueJsons[v.id] : ""
-            return <Text style={productDescription} key={v.id}>
-                {`${v.name}: ${val}`}
-              </Text>})}
+              const valueJsons = orderItem.selectedVariants
+                ? orderItem.selectedVariants
+                : null;
+              const val = valueJsons ? valueJsons[v.id] : "";
+              return (
+                <Text style={productDescription} key={v.id}>
+                  {`${v.name}: ${val}`}
+                </Text>
+              );
+            })}
           </Column>
         </Column>
         {/* Amount */}
@@ -377,5 +389,5 @@ function OrderItemComponent({orderItem, itemPrice }: OrderItemProps) {
         </Column>
       </Row>
     </Section>
-  )
+  );
 }
