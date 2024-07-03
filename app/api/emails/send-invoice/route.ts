@@ -34,12 +34,12 @@ export async function POST(req: Request) {
       if (order) {
         // Send email
         const emailResult: ResendResponse =
-          await ResendClient.sendCustomerInvoice(
-            session.customer_email ?? "",
-            order
-          );
+          await ResendClient.sendCustomerInvoice(order.email, order);
 
-        console.log("[CUSTOMER INVOICE]: ", emailResult.detail);
+        console.log(
+          "[CUSTOMER INVOICE]: ",
+          emailResult.detail + " - " + order.email
+        );
 
         return new NextResponse(JSON.stringify(emailResult), {
           status: emailResult.status,
