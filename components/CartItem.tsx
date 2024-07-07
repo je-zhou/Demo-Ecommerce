@@ -16,6 +16,7 @@ import {
   sameVariantCombo,
 } from "@/lib/utils";
 import { productCanBeShipped } from "@/actions/productCanBeShipped";
+import Link from "next/link";
 
 interface CartItemProps {
   data: CartItemType;
@@ -78,7 +79,9 @@ export default function CartItem({ data, address }: CartItemProps) {
         </div>
         <div className="md:pr-24 text-lg space-y-2 font-semibold text-black">
           {/* Name */}
-          <p className="pr-20 md:pr-0">{data.name}</p>
+          <Link href={`/product/${data.id}`} className="pr-20 md:pr-0">
+            {data.name}
+          </Link>{" "}
           {/* Currency */}
           <Currency
             value={

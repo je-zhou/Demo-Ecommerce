@@ -28,7 +28,7 @@ export default function RootLayout({
         <ModalProvider />
         <ToastProvider />
         <Navbar />
-        {children}
+        <div className="min-h-screen bg-background">{children}</div>
         <Footer />
       </body>
     </html>
