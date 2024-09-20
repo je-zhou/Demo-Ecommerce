@@ -19,6 +19,7 @@ interface InfoProps {
 export default function Info({ data }: InfoProps) {
   const [quantity, setQuantity] = useState(1);
   const [variants, setVariants] = useState<{ [key: string]: string }>({});
+  const [validSlider, setValidSlider] = useState(true);
   const [price, setPrice] = useState(data.price);
   const cart = useCart();
 
@@ -60,21 +61,23 @@ export default function Info({ data }: InfoProps) {
       </p>
       {/* Variants */}
       <div className="">
-        {data.variants
-          .sort((a, b) => Number(a.inputType) - Number(b.inputType))
-          .map((variant) => (
-            <div key={variant.id} className={cn("flex gap-x-4 pt-4")}>
-              {variant.inputType ? (
+        {Object.entries(data.variants)
+          .sort(([_, a], [__, b]) => Number(a.isInput) - Number(b.isInput))
+          .map(([k, v]) => (
+            <div key={k} className={cn("flex gap-x-4 pt-4")}>
+              {v.isInput ? (
                 <VariantSlider
-                  variantId={variant.id}
-                  variant={variant}
-                  value={variants[variant.id]}
+                  variantId={k}
+                  variant={v}
+                  value={variants[k]}
                   onChange={onVariantUpdate}
+                  setValidSlider={setValidSlider}
                 />
               ) : (
                 <VariantSelector
-                  variant={variant}
-                  value={variants[variant.id]}
+                  variant={v}
+                  variantId={k}
+                  value={variants[k]}
                   onChange={onVariantUpdate}
                 />
               )}

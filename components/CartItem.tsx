@@ -13,6 +13,7 @@ import {
   calculateProductShipping,
   formatter,
   getVariablePrice,
+  getVariablePricingIds,
   sameVariantCombo,
 } from "@/lib/utils";
 import { productCanBeShipped } from "@/actions/productCanBeShipped";
@@ -57,11 +58,7 @@ export default function CartItem({ data, address }: CartItemProps) {
     ? productCanBeShipped(data, address.country)
     : false;
 
-  const variablePricingIds = data.variants
-    .filter((v) => v.inputType && v.variablePricing)
-    .map((v) => v.id);
-
-  console.log(data.shipping);
+  const variablePricingIds = getVariablePricingIds(data.variants);
 
   return (
     <li className="flex py-6 border-b">
@@ -96,11 +93,11 @@ export default function CartItem({ data, address }: CartItemProps) {
           />
           {/* Variants */}
           <div className="mt-1 flex text-sm flex-col">
-            {data.variants.map((variant) => (
-              <div className="flex space-x-1" key={variant.id}>
-                <p className="font-semibold text-gray-800">{variant.name}:</p>
+            {Object.entries(data.variants).map(([k, v]) => (
+              <div className="flex space-x-1" key={k}>
+                <p className="font-semibold text-gray-800">{v.name}:</p>
                 <p className="font-normal text-gray-500">
-                  {data.selectedVariants[variant.id]}
+                  {data.selectedVariants[k]}
                 </p>
               </div>
             ))}

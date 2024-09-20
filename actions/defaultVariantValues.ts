@@ -3,13 +3,13 @@ import { Product } from "@/types";
 export function loadDefaultVariantValues(product: Product) {
   const initialVariants: { [key: string]: string } = {};
 
-  product.variants.forEach((v) => {
-    const options = v.variantOptions ?? [];
+  Object.entries(product.variants).forEach(([k, v]) => {
+    const options = v.values ?? [];
 
-    if (v.inputType) {
-      initialVariants[v.id] = v.inputStart ? v.inputStart.toString() : "";
+    if (v.isInput) {
+      initialVariants[k] = v.inputRangeLow ? v.inputRangeLow.toString() : "";
     } else {
-      initialVariants[v.id] = options.length > 0 ? options[0].value : "";
+      initialVariants[k] = options.length > 0 ? options[0].value : "";
     }
   });
 

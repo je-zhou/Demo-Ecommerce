@@ -17,15 +17,25 @@ export interface Category {
   description: string;
   products: Product[];
 }
-
-export interface Variant {
+export interface VariantValue {
   id: string;
+  value: string;
+}
+
+export interface ProductPricingMatrix {
+  price: number;
+  values: {
+    [variantId: string]: string;
+  };
+}
+export interface Variant {
   name: string;
+  values: VariantValue[];
+  isInput: boolean;
+  stepSize: number;
+  inputRangeLow: number;
+  inputRangeHigh: number;
   variablePricing: boolean;
-  inputType: boolean;
-  inputStart?: number;
-  inputEnd?: number;
-  variantOptions?: VariantValue[];
 }
 
 export interface VariantValue {
@@ -43,7 +53,7 @@ export interface ProductPricingMatrix {
 export interface Product {
   id: string;
   categories: Category[];
-  variants: Variant[];
+  variants: { [key: string]: Variant };
   images: Image[];
   allowLocalPickUp: Boolean;
   productDetails: { type: string; data: Buffer };

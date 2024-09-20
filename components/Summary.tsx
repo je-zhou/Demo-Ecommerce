@@ -9,7 +9,12 @@ import Currency from "./ui/Currency";
 import useCart from "@/hooks/use-cart";
 import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
-import { calculateProductShipping, cn, getVariablePrice } from "@/lib/utils";
+import {
+  calculateProductShipping,
+  cn,
+  getVariablePrice,
+  getVariablePricingIds,
+} from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { useOrigin } from "@/hooks/use-origin";
 import { AddressElement, Elements } from "@stripe/react-stripe-js";
@@ -67,9 +72,7 @@ export default function Summary({ address, setAddress }: SummaryProps) {
   }, [searchParams, removeAll]);
 
   const totalPrice = items.reduce((total, item) => {
-    const variablePricingIds = item.variants
-      .filter((v) => v.inputType && v.variablePricing)
-      .map((v) => v.id);
+    const variablePricingIds = getVariablePricingIds(item.variants);
 
     const itemPrice = item.pricingMatrix
       ? getVariablePrice(
@@ -153,9 +156,7 @@ export default function Summary({ address, setAddress }: SummaryProps) {
         <h2 className="text-lg font-medium text-gray-900">Order Summary</h2>
         <div className="my-4">
           {items.map((item) => {
-            const variablePricingIds = item.variants
-              .filter((v) => v.inputType && v.variablePricing)
-              .map((v) => v.id);
+            const variablePricingIds = getVariablePricingIds(item.variants);
 
             const itemPrice = item.pricingMatrix
               ? getVariablePrice(

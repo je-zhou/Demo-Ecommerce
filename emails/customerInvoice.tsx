@@ -1,4 +1,4 @@
-import { getVariablePrice } from "@/lib/utils";
+import { getVariablePrice, getVariablePricingIds } from "@/lib/utils";
 import { format } from "date-fns";
 import { Order, OrderItem } from "@/types";
 import {
@@ -30,9 +30,8 @@ export default function CustomerInvoiceEmail({
   const orderItemComponents: React.JSX.Element[] = [];
 
   order.orderItems.forEach((oi) => {
-    const variablePricingIds = oi.product.variants
-      .filter((v) => v.inputType && v.variablePricing)
-      .map((v) => v.id);
+    const variablePricingIds = getVariablePricingIds(oi.product.variants);
+
     const itemPrice = oi.product.pricingMatrix
       ? getVariablePrice(
           oi.selectedVariants as any,
@@ -370,13 +369,13 @@ function OrderItemComponent({ orderItem, itemPrice }: OrderItemProps) {
             {orderItem.product.name} <span>{"x" + orderItem.quantity}</span>
           </Text>
           <Column>
-            {orderItem.product.variants.map((v) => {
+            {Object.entries(orderItem.product.variants).map(([k, v]) => {
               const valueJsons = orderItem.selectedVariants
                 ? orderItem.selectedVariants
                 : null;
-              const val = valueJsons ? valueJsons[v.id] : "";
+              const val = valueJsons ? valueJsons[k] : "";
               return (
-                <Text style={productDescription} key={v.id}>
+                <Text style={productDescription} key={k}>
                   {`${v.name}: ${val}`}
                 </Text>
               );

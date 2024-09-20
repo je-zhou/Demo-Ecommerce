@@ -11,13 +11,18 @@ export const formatter = new Intl.NumberFormat("en-US", {
   currency: "AUD",
 });
 
+export function getVariablePricingIds(variants: { [key: string]: any }) {
+  return Object.entries(variants)
+    .filter(([_, v]) => v.isInput && v.variablePricing)
+    .map(([k, _]) => k);
+}
+
 export function findPrice(
   product: Product,
   selectedVariants: { [key: string]: string }
 ) {
-  const variablePricingIds = product.variants
-    .filter((v) => v.inputType && v.variablePricing)
-    .map((v) => v.id);
+  const variablePricingIds = getVariablePricingIds(product.variants);
+
   const sortedPricingMatrix = product.pricingMatrix
     ? sortPricingMatrix(product.pricingMatrix, variablePricingIds)
     : [];
@@ -114,9 +119,7 @@ export function calculateProductShipping(
   if (productShipping) {
     shipping = Number(productShipping.price);
 
-    const variablePricingIds = product.variants
-      .filter((v) => v.inputType && v.variablePricing)
-      .map((v) => v.id);
+    const variablePricingIds = getVariablePricingIds(product.variants);
 
     const varShipping = productShipping.variableShipping;
 
